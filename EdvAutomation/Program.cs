@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using Newtonsoft.Json;
+
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
@@ -25,11 +27,13 @@ public static class Program
 
         var notAddedEdvs = new List<string>();
 
+        AppSettings appSettings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText("appsettings.json"));
+
         foreach (var url in urls)
         {
             try
             {
-                Program.processUrl(url, driver);
+                Program.processUrl(url, driver, appSettings);
             }
             catch (Exception e)
             {
@@ -44,11 +48,11 @@ public static class Program
         Console.WriteLine("finished processing.");
     }
 
-    private static void processUrl(string url, ChromeDriver driver)
+    private static void processUrl(string url, ChromeDriver driver, AppSettings appSettings)
     {
         if (!loggedIn)
         {
-            Program.login(driver);
+            Program.login(driver, appSettings);
         }
 
         driver.Navigate().GoToUrl("https://edvgerial.kapitalbank.az/az/dashboard");
@@ -73,10 +77,10 @@ public static class Program
         var popupButton = popup.FindElement(By.ClassName("submit"));
         popupButton.Click();
 
-        Thread.Sleep(TimeSpan.FromSeconds(5));
+        Thread.Sleep(appSettings.DelayAfterSubmit);
     }
 
-    private static void login(ChromeDriver driver)
+    private static void login(ChromeDriver driver, AppSettings appSettings)
     {
         // Navigate to the target website
         driver.Navigate().GoToUrl("https://edvgerial.kapitalbank.az/az/dashboard");
@@ -84,17 +88,17 @@ public static class Program
         // login
         var mobileTextBox = driver.FindElement(By.Id("mobile"));
         mobileTextBox.Clear();
-        mobileTextBox.SendKeys("***");
+        mobileTextBox.SendKeys(appSettings.Username);
 
         var passwordTextBox = driver.FindElement(By.Id("password"));
         passwordTextBox.Clear();
-        passwordTextBox.SendKeys("***");
+        passwordTextBox.SendKeys(appSettings.Password);
 
         var loginButton = driver.FindElement(By.ClassName("login"));
         loginButton.Click();
 
         loggedIn = true;
 
-        Thread.Sleep(TimeSpan.FromSeconds(2));
+        Thread.Sleep(appSettings.DelayAfterLogin);
     }
 }
