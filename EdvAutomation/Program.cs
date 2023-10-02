@@ -43,7 +43,10 @@ public static class Program
             }
         }
 
-        File.WriteAllLines("notAddedEdvs.txt", notAddedEdvs);
+        if (notAddedEdvs.Count > 0)
+        {
+            File.WriteAllLines("notAddedEdvs.txt", notAddedEdvs);
+        }
 
         Console.WriteLine("finished processing.");
     }
