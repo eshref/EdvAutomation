@@ -9,3 +9,4 @@ Before running the project, ensure that you have the following prerequisites ins
 - [.NET Core](https://dotnet.microsoft.com/download/dotnet) (or [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) if using older versions)
 - [Google Chrome](https://www.google.com/chrome/) browser
 - [Chrome WebDriver](https://sites.google.com/chromium.org/driver/)
+- [Latest driver versions download page](https://googlechromelabs.github.io/chrome-for-testing/#stable)
