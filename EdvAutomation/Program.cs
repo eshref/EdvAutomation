@@ -48,7 +48,9 @@ public static class Program
             File.WriteAllLines("notAddedEdvs.txt", notAddedEdvs);
         }
 
-        Console.WriteLine("finished processing.");
+        Console.WriteLine("Finished processing, press any key to exit.");
+
+        Console.ReadLine();
     }
 
     private static void processUrl(string url, ChromeDriver driver, AppSettings appSettings)
