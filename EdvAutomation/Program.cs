@@ -73,7 +73,7 @@ public static class Program
         searchButton.Click();
 
         // Wait for the popup to appear by class name
-        var popup = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+        var popup = new WebDriverWait(driver, appSettings.SearchPopupTimeout)
             .Until(ExpectedConditions.ElementIsVisible(By.ClassName("add-receipt-popup")));
 
         // Click the button within the popup by class name
