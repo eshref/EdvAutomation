@@ -23,7 +23,7 @@ public static class Program
         using var driver = new ChromeDriver(driverPath);
 
         // List of example URLs
-        var urls = File.ReadAllLines("edvlist.txt");
+        var urls = File.ReadAllLines("edvlist.txt").Distinct().ToList();
 
         var notAddedEdvs = new List<string>();
 
