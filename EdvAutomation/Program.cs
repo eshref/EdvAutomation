@@ -37,7 +37,7 @@ public static class Program
 
         int notProcessed = 0;
 
-        foreach (var url in urls)
+        foreach (string url in urls)
         {
             try
             {
