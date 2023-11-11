@@ -25,21 +25,33 @@ public static class Program
         // List of example URLs
         var urls = File.ReadAllLines("edvlist.txt").Distinct().ToList();
 
+        var urlsCount = urls.Count;
+
+        Console.WriteLine($"read {urlsCount} distinct url.");
+
         var notAddedEdvs = new List<string>();
 
         AppSettings appSettings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText("appsettings.json"));
+
+        int processed = 0;
+
+        int notProcessed = 0;
 
         foreach (var url in urls)
         {
             try
             {
                 Program.processUrl(url, driver, appSettings);
+
+                processed++;
             }
             catch (Exception e)
             {
                 notAddedEdvs.Add(url);
 
                 Console.WriteLine($"An error occurred while processing url. Url: {url}. Exception: {e.Message}");
+
+                notProcessed++;
             }
         }
 
@@ -48,7 +60,7 @@ public static class Program
             File.WriteAllLines("notAddedEdvs.txt", notAddedEdvs);
         }
 
-        Console.WriteLine("Finished processing, press any key to exit.");
+        Console.WriteLine($"Finished processing. Count: {urlsCount}. Processed: {processed}. Not processed: {notProcessed}. Press any key to exit.");
 
         Console.ReadLine();
     }
